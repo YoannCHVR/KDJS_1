@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>exo3&4</title>
+  </head>
+  <body>
+
+    <script type="text/javascript">
+
+    //Object Pers.
+    var Personne = {
+      init: function(nom, prenom, dateNaissance, taille) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateNaissance = dateNaissance;
+        this.taille = taille;
+      }
+    }
+
+    //Object Prof.
+    var Professeur = Object.create(Personne);
+
+    Professeur.initProf = function(nom, prenom, dateNaissance, taille, email) {
+      this.init(nom, prenom, dateNaissance, taille);
+      this.email = email;
+    };
+
+    Professeur.decrire = function() {
+      return 'Je m\'appelle ' + this.prenom + " " + this.nom + ', je suis né le ' + this.dateNaissance[0] + "/" + this.dateNaissance[1] + "/" + this.dateNaissance[2] + '. Je fais : ' + this.taille + ' cm. Voici mon adresse email ' + this.email + '.';
+    };
+
+    Professeur.direAge = function() {
+      let currentDay = new Date();
+      let currentAge =  currentDay.getFullYear() - this.dateNaissance[2];
+      return currentAge + " ans.";
+    };
+
+    //Declare Prof.
+    const Philippe = Object.create(Professeur);
+    Philippe.initProf("MARY", "Philippe", [25, 4, 1960], 200, "Philippe@Philippe.fr");
+    alert(Philippe.decrire());
+
+    const Mael = Object.create(Professeur);
+    Mael.initProf("ALFONSE", "Mael", [12, 12, 1978], 150, "Mael@Mael.fr");
+    alert(Mael.decrire());
+    alert(Mael.direAge());
+
+
+    </script>
+
+  </body>
+</html>
