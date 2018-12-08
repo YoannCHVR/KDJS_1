@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <title>Titre de la page</title>
+  <meta name="description" content="Description de la page">
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+
+  <script src="jquery-3.2.1.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      $(document).submit(function(event) {
+
+        console.log('Le formulaire a bien été soumis.');
+
+        //Get type and add content
+        var content = $("input[name=contenu]").val();
+
+        //Add a Type and balise
+        var type = $("select[name=type]").val();
+        var specialType = type.split(":");
+        var balise;
+
+        if (type && (content != "")) {
+          switch (type) {
+            case "img":
+              balise = "<" + type + " src='" + content + "' alt='' /> ";
+              break;
+            case "a":
+              balise = "<" + type + " href='" + content + "'>" + " Mon lien " + "</" + type + "> ";
+              break;
+            case "input:text":
+              //<input type="text" placeholder="Contenu" id="contenu" name="contenu" />
+              balise = "<" + specialType[0] + " type='" + specialType[1] + "' placeholder='" + content + "' name=" + content + " />";
+              break;
+            case "input:submit":
+              //<input type="text" placeholder="Contenu" id="contenu" name="contenu" />
+              balise = "<" + specialType[0] + " type='" + specialType[1] + "' value='" + content + "' name=" + content + " />";
+              break;
+            case "label":
+              //<label for="type">Type d'élément</label>
+              balise = "<" + type + " for='" + content + "'>" + content + "</" + type + ">";
+              break;
+            default:
+              balise = "<" + type + ">" + content + "</" + type + ">";
+          }
+        }
+        else {
+          alert("Veuillez saisir du contenu.");
+        }
+
+        //If div#recipient has no content
+        if ($("div#recipient").children().length == 0) {
+          $("div#recipient").html("");
+        }
+
+        //Checkbox "Add before"
+        if ($("#ajoutAvant").is(":checked")) {
+          $(balise).prependTo("#recipient");
+        } else {
+          //Add in "recipient"
+          $(balise).appendTo("#recipient");
+        }
+
+        //Pour tester le code et garder l'évènement toujours actif
+        event.preventDefault();
+      });
+
+      //Button actions
+      $("input:button").click(function() {
+        if ($(this).val() == "Réinitialiser") {
+          $("div#recipient").html("La page est vide pour l'instant...");
+        } else {
+          //Génération du code
+          alert($("div#recipient").html());
+        }
+      });
+
+    });
+  </script>
+</head>
+
+<body>
+  <div id="generateur">
+    <form action="#">
+      <label for="type">Type d'élément</label>
+      <br />
+      <select name="type" id="type">
+        <option value="h1">Titre (h1)</option>
+        <option value="h2">Titre (h2)</option>
+        <option value="h3">Titre (h3)</option>
+        <option value="p">Paragraphe (p)</option>
+        <option value="img">Image (img)</option>
+        <option value="a">Lien (a))</option>
+        <option value="input:text">Champ de texte (input:text)</option>
+        <option value="input:submit">Bouton (input:submit)</option>
+        <option value="label">Label (label)</option>
+      </select>
+      <br />
+      <label for="contenu">Contenu de l'élément</label><br />
+      <input type="text" placeholder="Contenu" id="contenu" name="contenu" />
+      <br />
+      <label for="ajoutAvant">Ajouter avant</label>
+      <input type="checkbox" name="ajoutAvant" id="ajoutAvant" />
+      <br />
+      <input type="submit" value="Ajouter" />
+      <input type="button" value="Réinitialiser" />
+      <input type="button" value="Générer" />
+    </form>
+  </div>
+
+  <div id="recipient">
+    La page est vide pour l'instant...
+  </div>
+
+  <!-- Style -->
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: #FCFCFC;
+    }
+
+    #generateur {
+      float: right;
+      border: 1px solid #C1C2CC;
+      padding: 15px;
+      border-radius: 3px;
+      background: #F1F1F1;
+    }
+
+    #generateur label {
+      font-weight: bold;
+    }
+
+    #generateur select {
+      margin-bottom: 10px;
+      width: 200px;
+      border: 1px solid #666;
+    }
+
+    #generateur input[type=text] {
+      margin-bottom: 10px;
+      width: 188px;
+      border: 1px solid #666;
+      padding: 5px;
+      border-radius: 3px;
+    }
+
+    #generateur input[type=checkbox] {
+      margin-bottom: 10px;
+    }
+
+    #generateur input[type=submit] {
+      background-color: #83D833;
+    }
+
+    #generateur input[type=button] {
+      background-color: #E80612;
+    }
+
+    #generateur input[type=button]:last-child {
+      background-color: #FCC325;
+    }
+
+    #generateur input[type=submit],
+    #generateur input[type=button] {
+      color: white;
+      border-radius: 3px;
+      border: none;
+      padding: 9px;
+    }
+
+    #generateur input[type=submit]:hover,
+    #generateur input[type=button]:hover {
+      opacity: 0.7;
+      cursor: pointer;
+    }
+
+    #recipient {
+      margin-right: 250px;
+      padding: 15px;
+      border-radius: 3px;
+      border: 1px solid #C1C2CC;
+    }
+  </style>
+</body>
+
+</html>
