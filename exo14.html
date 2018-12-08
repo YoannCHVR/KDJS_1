@@ -1,0 +1,85 @@
+<!-- KIT DE SURVIE JS - IUT INFORMATIQUE BORDEAUX -->
+<!DOCTYPE html>
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <title>Exercice 14</title>
+  <meta name="description" content="Description de la page">
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+
+  <style>
+    body{ font-family: 'Quicksand', sans-serif; }
+      form{
+        display: flex;
+        flex-direction: column;
+        max-width: 20%;
+      }
+      input, select, textarea {
+        margin-bottom: 10px;
+      }
+	</style>
+
+  <script src="jquery-3.2.1.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      // Ecrire les scripts ici
+      $(document).submit(function(event) {
+        console.log('Le formulaire a bien été soumis.');
+        //Fonction Each pour voir les valeurs contenues dans les champs
+        $('form > input, form > textarea, form > select').each(function() {
+          console.log($(this).val());
+        });
+
+        //Constructeur de l'objet Personne
+        function Personne(nom, prenom, age, gender, description) {
+          this.nom = nom;
+          this.prenom = prenom;
+          this.age = age;
+          this.gender = gender;
+          this.description = description;
+          this.presenter = function() {
+            console.log("Je m'appelle " + this.prenom + " " + this.nom +
+            ", j’ai " + this.age + " ans et je suis du sexe : " + this.gender + ". " + this.description);
+          };
+        }
+
+        // Cr´eation d’un objet Personne
+        var Perso1 = new Personne();
+        Perso1.nom = $("input[name=nom]").val();
+        Perso1.prenom = $("input[name=prenom]").val();
+        Perso1.age = $("input[name=age]").val();
+        Perso1.gender = $("select[name=gender]").val();
+        Perso1.description = $("textarea[name=description]").val();
+
+        Perso1.presenter();
+
+        //Pour tester le code et garder l'évènement toujours actif
+        event.preventDefault();
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <!-- Formulaire ici -->
+  <form class="" action="" method="post">
+    <label for="nom">Nom</label>
+    <input type="text" name="nom" value="Votre nom">
+    <label for="prenom">Prénom</label>
+    <input type="text" name="prenom" value="Votre prénom">
+    <label for="age">Age</label>
+    <input type="number" name="age">
+    <label for="gender">Sexe</label>
+    <select name="gender">
+      <option value="Homme">H</option>
+      <option value="Femme">F</option>
+    </select>
+    <label for="description">Description</label>
+    <textarea name="description" cols="30" rows="10"></textarea>
+    <input type="submit" value="Validation">
+  </form>
+</body>
+
+</html>
